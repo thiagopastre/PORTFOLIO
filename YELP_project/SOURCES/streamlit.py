@@ -15,7 +15,3 @@ arquivo=st.sidebar.file_uploader(
     label='Selecione o arquivo CSV',
     type=['csv']
 )
-
-if arquivo is not None:
-    business = arquivo.drop('Unnamed: 0', axis=1)
-    print(business.head(3))
