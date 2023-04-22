@@ -17,5 +17,5 @@ arquivo=st.sidebar.file_uploader(
 )
 
 if arquivo is not None:
-    business = pd.read_csv(arquivo).drop('Unnamed: 0', axis=1)
+    business = arquivo.drop('Unnamed: 0', axis=1)
     print(business.head(3))
