@@ -70,8 +70,7 @@ if file is not None:
 
         st.write("Observa-se que 50'%' dos negócios cadastrados estão qualificados com no máximo 3.5 estrelas, \
                  sendo que a grande maioria deles está abaixo de 3 estrelas.")
-
-Temos penas 25% dos negócios atingindo a pontuação máxima.')
+        st.write("Temos penas 25'%' dos negócios atingindo a pontuação máxima.")
     
     elif option == 'Quantidade de negócios cadastrados por Estado (barplot)':
 
