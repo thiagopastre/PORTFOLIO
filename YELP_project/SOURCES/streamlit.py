@@ -47,7 +47,7 @@ if file is not None:
     
     if option == 'Distribuição do target (stars)':
 
-        st.subheader('TESTE')
+        st.title('Distribuição do target (stars)')
 
         stars = business['stars'].agg('value_counts')
 
@@ -133,4 +133,4 @@ if file is not None:
                         title_font_size = 22,
                         title_x=0.5, 
                         )
-        st.pyplot(fig)
+        st.plotly_chart(fig)
