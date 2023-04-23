@@ -74,3 +74,25 @@ if file is not None:
             title='Quantidade de negócios cadastrados por Estado'
             )
         st.pyplot(fig)
+    
+    elif option == 'Quantidade de negócios cadastrados por Estado (map)':
+
+        # Criando um Dataframe contendo a quantidade TOTAL de negócios (abertos e fechados) agrupados por Estado
+        df_total_business = business[['state','is_open']].groupby('state').sum()
+        df_total_business['total'] = business[['state','is_open']].groupby('state').count()
+        df_total_business = df_total_business.sort_values(by='total', ascending=False).reset_index()
+
+        fig = px.choropleth(df_total_business,
+                        locations='state', 
+                        locationmode="USA-states", 
+                        scope="usa",
+                        color='total',
+                        color_continuous_scale="turbo"
+                        )
+
+    fig.update_layout(title_text = 'Quantidade de negócios cadastrados por Estado',
+                    title_font_size = 22,
+                    title_x=0.5, 
+                    )
+
+    st.plotly_chart(fig)  
