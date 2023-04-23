@@ -90,9 +90,9 @@ if file is not None:
                         color_continuous_scale="turbo"
                         )
 
-    fig.update_layout(title_text = 'Quantidade de negócios cadastrados por Estado',
-                    title_font_size = 22,
-                    title_x=0.5, 
-                    )
+        fig.update_layout(title_text = 'Quantidade de negócios cadastrados por Estado',
+                          title_font_size = 22,
+                          title_x=0.5, 
+                          )
 
     st.plotly_chart(fig)  
