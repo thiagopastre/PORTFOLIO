@@ -70,7 +70,7 @@ if file is not None:
     
     elif option == 'Quantidade de negócios cadastrados por Estado (barplot)':
 
-        fig, ax = plt.subplots(figsize=[15,5])
+        fig, ax = plt.subplots(figsize=[15,6])
 
         ax = sns.barplot(x=df_total_business['state'],
                         y=df_total_business['total'],
