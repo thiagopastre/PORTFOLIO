@@ -45,7 +45,7 @@ if file is not None:
 
         stars = business['stars'].agg('value_counts')
 
-        fig, ax = plt.subplots(1,2, figsize=[14,6])
+        fig, ax = plt.subplots(1,2, figsize=[12,4])
 
         sns.boxplot(ax=ax[0],
                     data=business,
@@ -104,7 +104,7 @@ if file is not None:
     
     elif option == 'Quantidade de negócios abertos x fechados por Estado':
 
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=[12,5])
 
         plt.bar(x=df_total_business['state'], height=df_total_business['is_open'])
         plt.bar(x=df_total_business['state'], height=(df_total_business['total'] - df_total_business['is_open']))
