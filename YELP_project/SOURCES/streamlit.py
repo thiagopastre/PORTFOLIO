@@ -68,13 +68,13 @@ if file is not None:
         ax[1].set_ylabel('Quantidade de avaliações')
         st.pyplot(fig)
 
-        st.write("Observa-se que 50/%/ dos negócios cadastrados estão qualificados com no máximo 3.5 estrelas, \
+        st.text("Observa-se que 50% dos negócios cadastrados estão qualificados com no máximo 3.5 estrelas, \
                  sendo que a grande maioria deles está abaixo de 3 estrelas.")
         st.write("Temos penas 25'%' dos negócios atingindo a pontuação máxima.")
     
     elif option == 'Quantidade de negócios cadastrados por Estado (barplot)':
 
-        fig, ax = plt.subplots(figsize=[15,5])
+        fig, ax = plt.subplots()
 
         ax = sns.barplot(x=df_total_business['state'],
                         y=df_total_business['total'],
@@ -104,7 +104,7 @@ if file is not None:
                           title_font_size = 22,
                           )
 
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig)
     
     elif option == 'Quantidade de negócios abertos x fechados por Estado':
 
