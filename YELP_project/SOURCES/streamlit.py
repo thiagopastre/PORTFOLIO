@@ -47,8 +47,6 @@ if file is not None:
     
     if option == 'Distribuição do target (stars)':
 
-        st.title('Distribuição do target (stars)')
-
         stars = business['stars'].agg('value_counts')
 
         fig, ax = plt.subplots(1,2, figsize=[12,4])
@@ -69,6 +67,11 @@ if file is not None:
         ax[1].set_xlabel('Stars')
         ax[1].set_ylabel('Quantidade de avaliações')
         st.pyplot(fig)
+
+        st.write("Observa-se que 50'%' dos negócios cadastrados estão qualificados com no máximo 3.5 estrelas, \
+                 sendo que a grande maioria deles está abaixo de 3 estrelas.")
+
+Temos penas 25% dos negócios atingindo a pontuação máxima.')
     
     elif option == 'Quantidade de negócios cadastrados por Estado (barplot)':
 
@@ -100,7 +103,6 @@ if file is not None:
 
         fig.update_layout(title_text = 'Quantidade de negócios cadastrados por Estado',
                           title_font_size = 22,
-                          title_x=0.5, 
                           )
 
         st.plotly_chart(fig)
@@ -131,6 +133,5 @@ if file is not None:
 
         fig.update_layout(title_text = 'Ranking das categorias com mais negócios cadastrados (TOP 10)',
                         title_font_size = 22,
-                        #title_x=0.5, 
                         )
         st.plotly_chart(fig)
