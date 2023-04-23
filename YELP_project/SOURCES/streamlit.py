@@ -16,5 +16,6 @@ file=st.sidebar.file_uploader(
     type=['pkl']
 )
 
-business = pd.read_pickle(file)
-st.write(file.head())
+if file is not None:
+    business = pd.read_pickle(file)
+    st.write(business.head())
