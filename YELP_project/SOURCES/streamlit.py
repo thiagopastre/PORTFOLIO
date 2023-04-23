@@ -68,9 +68,9 @@ if file is not None:
         ax[1].set_ylabel('Quantidade de avaliações')
         st.pyplot(fig)
 
-        st.markdown("Observa-se que 50% dos negócios cadastrados estão qualificados com no máximo 3.5 estrelas, \
+        st.write("Observa-se que 50% dos negócios cadastrados estão qualificados com no máximo 3.5 estrelas, \
                  sendo que a grande maioria deles está abaixo de 3 estrelas.")
-        st.markdown("Temos penas 25% dos negócios atingindo a pontuação máxima.")
+        st.write("Temos penas 25% dos negócios atingindo a pontuação máxima.")
     
     elif option == 'Quantidade de negócios cadastrados por Estado (barplot)':
 
