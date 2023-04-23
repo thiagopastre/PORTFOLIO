@@ -11,10 +11,10 @@ st.title('EDA Yelp Project')
 st.sidebar.title('Menu')
 
 #Setup do upload do arquivo
-arquivo=st.sidebar.file_uploader(
-    label='Selecione o arquivo CSV',
-    type=['csv']
+file=st.sidebar.file_uploader(
+    label='Selecione o arquivo PKL',
+    type=['pkl']
 )
 
-business = pd.read_pickle('https://github.com/thiagopastre/PORTFOLIO/blob/main/YELP_project/INPUT/business_EDITED.pkl')
-st.write(business.head())
+business = pd.read_pickle(file)
+st.write(file.head())
