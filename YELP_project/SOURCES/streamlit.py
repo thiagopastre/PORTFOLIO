@@ -4,10 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 
-
-st.title('EDA Yelp Project')
-
-#Setup do upload do arquivo
+# Setup do upload do arquivo
 file=st.sidebar.file_uploader(
     label='Selecione o arquivo business_EDITED.pkl',
     type=['pkl']
@@ -44,12 +41,11 @@ if file is not None:
             graphs
             )
 
-    
     if option == 'Distribuição do target (stars)':
 
         stars = business['stars'].agg('value_counts')
 
-        fig, ax = plt.subplots(1,2, figsize=[12,4])
+        fig, ax = plt.subplots(1,2, figsize=[14,6])
 
         sns.boxplot(ax=ax[0],
                     data=business,
