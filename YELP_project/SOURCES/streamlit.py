@@ -7,9 +7,6 @@ import plotly.express as px
 
 st.title('EDA Yelp Project')
 
-# Personalizando o SideBar
-# st.sidebar.title('Menu')
-
 #Setup do upload do arquivo
 file=st.sidebar.file_uploader(
     label='Selecione o arquivo business_EDITED.pkl',
@@ -31,6 +28,9 @@ if file is not None:
 
     
     if option == 'Distribuição do target (stars)':
+
+        st.subheader('TESTE')
+        
         stars = business['stars'].agg('value_counts')
 
         fig, ax = plt.subplots(1,2, figsize=[12,4])
@@ -95,4 +95,4 @@ if file is not None:
                           title_x=0.5, 
                           )
 
-    st.plotly_chart(fig)  
+        st.plotly_chart(fig)  
