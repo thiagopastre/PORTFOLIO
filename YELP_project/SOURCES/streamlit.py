@@ -16,5 +16,5 @@ arquivo=st.sidebar.file_uploader(
     type=['csv']
 )
 
-business = pd.read_pickle(https://github.com/thiagopastre/PORTFOLIO/blob/main/YELP_project/INPUT/business_EDITED.pkl)
+business = pd.read_pickle('https://github.com/thiagopastre/PORTFOLIO/blob/main/YELP_project/INPUT/business_EDITED.pkl')
 st.write(business.head())
