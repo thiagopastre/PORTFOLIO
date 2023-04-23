@@ -26,9 +26,7 @@ if file is not None:
 
     option = st.selectbox(
             "Qual gráfico gostaria de analisar?",
-            graphs,
-            label_visibility=st.session_state.visibility,
-            disabled=st.session_state.disabled
+            graphs
             )
 
     
