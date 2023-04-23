@@ -131,6 +131,6 @@ if file is not None:
 
         fig.update_layout(title_text = 'Ranking das categorias com mais negócios cadastrados (TOP 10)',
                         title_font_size = 22,
-                        title_x=0.5, 
+                        #title_x=0.5, 
                         )
         st.plotly_chart(fig)
