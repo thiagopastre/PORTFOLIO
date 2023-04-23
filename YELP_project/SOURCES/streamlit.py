@@ -18,7 +18,9 @@ if file is not None:
 
     graphs = ['Distribuição do target (stars)',
             'Quantidade de negócios cadastrados por Estado (barplot)',
-            'Quantidade de negócios cadastrados por Estado (map)'
+            'Quantidade de negócios cadastrados por Estado (map)',
+            'Quantidade de negócios abertos x fechados por Estado',
+            'Ranking das categorias com mais negócios cadastrados (TOP 10)'
             ]
 
     option = st.selectbox(
@@ -30,7 +32,7 @@ if file is not None:
     if option == 'Distribuição do target (stars)':
 
         st.subheader('TESTE')
-        
+
         stars = business['stars'].agg('value_counts')
 
         fig, ax = plt.subplots(1,2, figsize=[12,4])
@@ -95,4 +97,46 @@ if file is not None:
                           title_x=0.5, 
                           )
 
-        st.plotly_chart(fig)  
+        st.plotly_chart(fig)
+    
+    elif option == 'Quantidade de negócios abertos x fechados por Estado':
+
+        fig, ax = plt.subplots(figsize=[10,5])
+
+        plt.bar(x=df_total_business['state'], height=df_total_business['is_open'])
+        plt.bar(x=df_total_business['state'], height=(df_total_business['total'] - df_total_business['is_open']))
+
+        ax.set(xlabel='Estados',
+            ylabel='Quantidade',
+            title='Quantidade de negócios abertos x fechados por Estado'
+            )
+            
+        plt.legend(['Open','Closed'])
+        st.pyplot(fig)
+    
+    elif option == 'Ranking das categorias com mais negócios cadastrados (TOP 10)':
+
+        # Criando um Dataframe contendo as categorias e a quantidade de negócios presentes em cada uma delas
+        cat_dict = {}
+
+        for feature in business:
+            if 'category' in feature:
+                new_feature = feature.replace('category_','')
+                cat_dict[new_feature] = business[feature].value_counts()[1]
+
+        df = pd.DataFrame.from_dict(cat_dict, orient='index').reset_index()
+        df = df.rename({'index':'categories', 0:'qty'}, axis=1)
+        df = df.sort_values(by='qty', ascending=False).reset_index(drop=True).head(10)
+
+        fig = px.bar(df, y='qty', x='categories', text_auto='.2s',
+             labels={
+                     "categories": "Categorias",
+                     "qty": "Quantidade"
+                     }
+            )
+
+        fig.update_layout(title_text = 'Ranking das categorias com mais negócios cadastrados (TOP 10)',
+                        title_font_size = 22,
+                        title_x=0.5, 
+                        )
+        st.pyplot(fig)
