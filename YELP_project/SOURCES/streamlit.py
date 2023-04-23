@@ -16,6 +16,22 @@ file=st.sidebar.file_uploader(
 if file is not None:
     business = pd.read_pickle(file)
 
+    # Criando um Dataframe contendo a quantidade TOTAL de negócios (abertos e fechados) agrupados por Estado
+    df_total_business = business[['state','is_open']].groupby('state').sum()
+    df_total_business['total'] = business[['state','is_open']].groupby('state').count()
+    df_total_business = df_total_business.sort_values(by='total', ascending=False).reset_index()
+
+    # Criando um Dataframe contendo as categorias e a quantidade de negócios presentes em cada uma delas
+    cat_dict = {}
+    for feature in business:
+        if 'category' in feature:
+            new_feature = feature.replace('category_','')
+            cat_dict[new_feature] = business[feature].value_counts()[1]
+
+    df = pd.DataFrame.from_dict(cat_dict, orient='index').reset_index()
+    df = df.rename({'index':'categories', 0:'qty'}, axis=1)
+    df = df.sort_values(by='qty', ascending=False).reset_index(drop=True).head(10)
+
     graphs = ['Distribuição do target (stars)',
             'Quantidade de negócios cadastrados por Estado (barplot)',
             'Quantidade de negócios cadastrados por Estado (map)',
@@ -56,11 +72,6 @@ if file is not None:
     
     elif option == 'Quantidade de negócios cadastrados por Estado (barplot)':
 
-        # Criando um Dataframe contendo a quantidade TOTAL de negócios (abertos e fechados) agrupados por Estado
-        df_total_business = business[['state','is_open']].groupby('state').sum()
-        df_total_business['total'] = business[['state','is_open']].groupby('state').count()
-        df_total_business = df_total_business.sort_values(by='total', ascending=False).reset_index()
-
         fig, ax = plt.subplots(figsize=[15,5])
 
         ax = sns.barplot(x=df_total_business['state'],
@@ -78,11 +89,6 @@ if file is not None:
         st.pyplot(fig)
     
     elif option == 'Quantidade de negócios cadastrados por Estado (map)':
-
-        # Criando um Dataframe contendo a quantidade TOTAL de negócios (abertos e fechados) agrupados por Estado
-        df_total_business = business[['state','is_open']].groupby('state').sum()
-        df_total_business['total'] = business[['state','is_open']].groupby('state').count()
-        df_total_business = df_total_business.sort_values(by='total', ascending=False).reset_index()
 
         fig = px.choropleth(df_total_business,
                         locations='state', 
@@ -115,18 +121,6 @@ if file is not None:
         st.pyplot(fig)
     
     elif option == 'Ranking das categorias com mais negócios cadastrados (TOP 10)':
-
-        # Criando um Dataframe contendo as categorias e a quantidade de negócios presentes em cada uma delas
-        cat_dict = {}
-
-        for feature in business:
-            if 'category' in feature:
-                new_feature = feature.replace('category_','')
-                cat_dict[new_feature] = business[feature].value_counts()[1]
-
-        df = pd.DataFrame.from_dict(cat_dict, orient='index').reset_index()
-        df = df.rename({'index':'categories', 0:'qty'}, axis=1)
-        df = df.sort_values(by='qty', ascending=False).reset_index(drop=True).head(10)
 
         fig = px.bar(df, y='qty', x='categories', text_auto='.2s',
              labels={
