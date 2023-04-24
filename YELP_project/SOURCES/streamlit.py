@@ -18,17 +18,17 @@ if file is not None:
     df_total_business['total'] = business[['state','is_open']].groupby('state').count()
     df_total_business = df_total_business.sort_values(by='total', ascending=False).reset_index()
 
-    graphs = ['Distribuição do target (stars)',
-            'Quantidade de negócios cadastrados por Estado (todos os Estados)',
-            'Quantidade de negócios cadastrados por Estado (apenas EUA)',
-            'Quantidade de negócios abertos x fechados por Estado',
-            'Ranking das categorias com mais negócios cadastrados (TOP 10)',
-            'Categorias com mais negócios cadastrados no Estado XXX (TOP 10)'
+    graphs = ['1. Distribuição do target (stars)',
+            '2. Quantidade de negócios cadastrados por Estado (todos os Estados)',
+            '3. Quantidade de negócios cadastrados por Estado (apenas EUA)',
+            '4. Quantidade de negócios abertos x fechados por Estado',
+            '5. Ranking das categorias com mais negócios cadastrados (TOP 10)',
+            '6. Categorias com mais negócios cadastrados no Estado selecionado'
             ]
 
     option = st.selectbox("Qual gráfico gostaria de analisar?", graphs)
 
-    if option == 'Distribuição do target (stars)':
+    if '1' in option:
 
         stars = business['stars'].agg('value_counts')
 
@@ -55,7 +55,7 @@ if file is not None:
                  sendo que a grande maioria deles está abaixo de 3 estrelas.")
         st.write("Temos penas 25% dos negócios atingindo a pontuação máxima.")
     
-    elif option == 'Quantidade de negócios cadastrados por Estado (barplot)':
+    elif '2' in option:
 
         fig, ax = plt.subplots(figsize=[15,6])
 
@@ -73,7 +73,7 @@ if file is not None:
             )
         st.pyplot(fig)
     
-    elif option == 'Quantidade de negócios cadastrados por Estado (map)':
+    elif '3' in option:
 
         fig = px.choropleth(df_total_business,
                         locations='state', 
@@ -83,13 +83,13 @@ if file is not None:
                         color_continuous_scale="turbo"
                         )
 
-        fig.update_layout(title_text = 'Quantidade de negócios cadastrados por Estado',
+        fig.update_layout(title_text = 'Quantidade de negócios cadastrados por Estado (USA)',
                           title_font_size = 22,
                           )
 
         st.plotly_chart(fig)
     
-    elif option == 'Quantidade de negócios abertos x fechados por Estado':
+    elif '4' in option:
 
         fig, ax = plt.subplots(figsize=[12,5])
 
@@ -104,7 +104,7 @@ if file is not None:
         plt.legend(['Open','Closed'])
         st.pyplot(fig)
     
-    elif option == 'Ranking das categorias com mais negócios cadastrados (TOP 10)':
+    elif '5' in option:
 
         # Criando um Dataframe contendo as categorias e a quantidade de negócios presentes em cada uma delas
         cat_dict = {}
@@ -129,7 +129,7 @@ if file is not None:
                         )
         st.plotly_chart(fig)
     
-    elif option == 'Categorias com mais negócios cadastrados no Estado selecionado':
+    elif '6' in option:
 
         state_option = st.selectbox("Selecione o Estado desejado", business['state'].unique())
 
