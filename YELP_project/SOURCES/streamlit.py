@@ -19,8 +19,8 @@ if file is not None:
     df_total_business = df_total_business.sort_values(by='total', ascending=False).reset_index()
 
     graphs = ['Distribuição do target (stars)',
-            'Quantidade de negócios cadastrados por Estado (barplot)',
-            'Quantidade de negócios cadastrados por Estado (map)',
+            'Quantidade de negócios cadastrados por Estado (todos os Estados)',
+            'Quantidade de negócios cadastrados por Estado (apenas EUA)',
             'Quantidade de negócios abertos x fechados por Estado',
             'Ranking das categorias com mais negócios cadastrados (TOP 10)',
             'Categorias com mais negócios cadastrados no Estado XXX (TOP 10)'
@@ -129,13 +129,13 @@ if file is not None:
                         )
         st.plotly_chart(fig)
     
-    elif option == 'Categorias com mais negócios cadastrados no Estado XXX (TOP 10)':
+    elif option == 'Categorias com mais negócios cadastrados no Estado selecionado':
 
         state_option = st.selectbox("Selecione o Estado desejado", business['state'].unique())
 
         # Criando um Dataframe contendo as categorias e a quantidade de negócios presentes em cada uma delas para um Estado ESPECÍFICO
         cat_dict2 = {}
-        business2 = business[business['state']==state_option]
+        business2 = business[business['state'] == state_option]
 
         for feature in business2:
             if 'category' in feature:
@@ -156,8 +156,7 @@ if file is not None:
                             }
                     )
 
-        fig.update_layout(title_text = "Categorias com mais negócios cadastrados no estado 'PA' (TOP 10)",
+        fig.update_layout(title_text = 'Categorias com mais negócios cadastrados no estado 'state_option '(TOP 10)',
                         title_font_size = 22,
-                        title_x=0.5, 
                         )
         st.plotly_chart(fig)
