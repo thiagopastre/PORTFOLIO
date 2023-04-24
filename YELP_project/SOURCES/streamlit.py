@@ -156,7 +156,7 @@ if file is not None:
                             }
                     )
 
-        fig.update_layout(title_text = f'Categorias com mais negócios cadastrados no estado '{state_option} '(TOP 10)',
+        fig.update_layout(title_text = f"Categorias com mais negócios cadastrados no estado {state_option} (TOP 10)",
                         title_font_size = 22,
                         )
         st.plotly_chart(fig)
