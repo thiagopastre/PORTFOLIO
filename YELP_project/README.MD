@@ -4,9 +4,8 @@ Esse projeto tem como objetivo aplicar os conhecimentos adquiridos durante os 14
 
 Ele será dividido em algumas etapas:
 
+* Data Processing + Feature Engineering
 * Análise exploratória dos dados (EDA)
-* Data Wrangling + Feature Engineering
-* Data visualization
 * Aplicação de modelos de Machine Learning
 * Otimização de modelos
 
