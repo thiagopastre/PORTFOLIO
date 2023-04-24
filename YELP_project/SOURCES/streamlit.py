@@ -22,7 +22,7 @@ if file is not None:
             '2. Quantidade de negócios cadastrados por Estado (todos os Estados)',
             '3. Quantidade de negócios cadastrados por Estado (apenas EUA)',
             '4. Quantidade de negócios abertos x fechados por Estado',
-            '5. Ranking das categorias com mais negócios cadastrados (TOP 10)',
+            '5. Ranking das categorias com mais negócios cadastrados',
             '6. Categorias com mais negócios cadastrados no Estado selecionado'
             ]
 
