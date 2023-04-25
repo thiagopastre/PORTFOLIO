@@ -8,15 +8,11 @@ from io import BytesIO
 
 @st.cache_data
 def load_data(url):
-    df = pd.read_csv(url)
+    df = pd.read_pickle(url)
     return df
 
 df = load_data("https://github.com/thiagopastre/PORTFOLIO/raw/main/YELP_project/INPUT/business_EDITED.pkl")
 st.dataframe(df)
-
-st.button("Rerun")
-
-st.write(df)
 
 # Setup do upload do arquivo PKL
 file=st.sidebar.file_uploader(
