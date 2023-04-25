@@ -4,7 +4,14 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 
-# Setup do upload do arquivo
+# Setup do download do arquivo PKL
+st.sidebar.download_button(
+    label="Download business_EDITED.pkl",
+    data='https://github.com/thiagopastre/PORTFOLIO/blob/main/YELP_project/INPUT/business_EDITED.pkl',
+    file_name='business_EDITED.pkl',
+)
+
+# Setup do upload do arquivo PKL
 file=st.sidebar.file_uploader(
     label='Selecione o arquivo business_EDITED.pkl',
     type=['pkl']
