@@ -6,15 +6,17 @@ import plotly.express as px
 import requests
 from io import BytesIO
 
-@st.cache(allow_output_mutation=True)
-def load_file(url):
-    modelLink = url
-    model = requests.get(modelLink).content
-    return model
-modelFile = load_file("https://github.com/thiagopastre/PORTFOLIO/raw/main/YELP_project/INPUT/business_EDITED.pkl")
-model = BytesIO(modelFile)
+@st.cache_data
+def load_data(url):
+    df = pd.read_csv(url)
+    return df
 
-st.write(model)
+df = load_data("https://github.com/thiagopastre/PORTFOLIO/raw/main/YELP_project/INPUT/business_EDITED.pkl")
+st.dataframe(df)
+
+st.button("Rerun")
+
+st.write(df)
 
 # Setup do upload do arquivo PKL
 file=st.sidebar.file_uploader(
