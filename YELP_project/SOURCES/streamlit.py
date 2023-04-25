@@ -7,7 +7,7 @@ import plotly.express as px
 # Setup do download do arquivo PKL
 st.sidebar.download_button(
     label="Download business_EDITED.pkl",
-    data='https://github.com/thiagopastre/PORTFOLIO/blob/main/YELP_project/INPUT/business_EDITED.pkl',
+    data='https://github.com/thiagopastre/PORTFOLIO/raw/main/YELP_project/INPUT/business_EDITED.pkl',
     file_name='business_EDITED.pkl',
 )
 
