@@ -11,8 +11,7 @@ def load_data(url):
     df = pd.read_pickle(url)
     return df
 
-df = load_data("https://github.com/thiagopastre/PORTFOLIO/raw/main/YELP_project/INPUT/business_EDITED.pkl")
-business = st.dataframe(df)
+business = load_data("https://github.com/thiagopastre/PORTFOLIO/raw/main/YELP_project/INPUT/business_EDITED.pkl")
 
 # Criando um Dataframe contendo a quantidade TOTAL de negócios (abertos e fechados) agrupados por Estado
 df_total_business = business[['state','is_open']].groupby('state').sum()
