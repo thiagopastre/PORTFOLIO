@@ -3,9 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
-import requests
-from io import BytesIO
 
+# Função para realizar o upload automático do arquivo 'business_EDITED.pkl'
 @st.cache_data
 def load_data(url):
     df = pd.read_pickle(url)
@@ -13,10 +12,7 @@ def load_data(url):
 
 business = load_data("https://github.com/thiagopastre/PORTFOLIO/raw/main/YELP_project/INPUT/business_EDITED.pkl")
 
-# Criando um Dataframe contendo a quantidade TOTAL de negócios (abertos e fechados) agrupados por Estado
-df_total_business = business[['state','is_open']].groupby('state').sum()
-df_total_business['total'] = business[['state','is_open']].groupby('state').count()
-df_total_business = df_total_business.sort_values(by='total', ascending=False).reset_index()
+st.title('EDA Yelp Project')
 
 graphs = ['1. Distribuição do target (stars)',
         '2. Quantidade de negócios cadastrados por Estado (todos os Estados)',
@@ -28,24 +24,25 @@ graphs = ['1. Distribuição do target (stars)',
 
 option = st.selectbox("Qual gráfico gostaria de analisar?", graphs)
 
+# Criando um Dataframe contendo a quantidade TOTAL de negócios (abertos e fechados) agrupados por Estado
+df_total_business = business[['state','is_open']].groupby('state').sum()
+df_total_business['total'] = business[['state','is_open']].groupby('state').count()
+df_total_business = df_total_business.sort_values(by='total', ascending=False).reset_index()
+
+
 if '1' in option:
-
     stars = business['stars'].agg('value_counts')
-
     fig, ax = plt.subplots(1,2, figsize=[12,4])
-
     sns.boxplot(ax=ax[0],
                 data=business,
                 x='stars',
                 palette='PuBu'
             )
-
     sns.barplot(ax=ax[1],
                 x=stars.index,
                 y=stars,
                 palette='PuBu'
             )
-
     fig.suptitle('Distribuição da feature "stars"')
     ax[1].set_xlabel('Stars')
     ax[1].set_ylabel('Quantidade de avaliações')
@@ -55,10 +52,9 @@ if '1' in option:
                 sendo que a grande maioria deles está abaixo de 3 estrelas.")
     st.write("Temos penas 25% dos negócios atingindo a pontuação máxima.")
 
+
 elif '2' in option:
-
     fig, ax = plt.subplots(figsize=[15,6])
-
     ax = sns.barplot(x=df_total_business['state'],
                     y=df_total_business['total'],
                     palette='PuBu_r',
@@ -66,15 +62,14 @@ elif '2' in option:
                     )
     for i in ax.containers:
         ax.bar_label(i,)
-
     ax.set(xlabel='Estados',
         ylabel='Quantidade',
         title='Quantidade de negócios cadastrados por Estado'
         )
     st.pyplot(fig)
 
-elif '3' in option:
 
+elif '3' in option:
     fig = px.choropleth(df_total_business,
                     locations='state', 
                     locationmode="USA-states", 
@@ -82,37 +77,32 @@ elif '3' in option:
                     color='total',
                     color_continuous_scale="turbo"
                     )
-
     fig.update_layout(title_text = 'Quantidade de negócios cadastrados por Estado (USA)',
                         title_font_size = 22,
                         )
 
     st.plotly_chart(fig)
 
+
 elif '4' in option:
-
     fig, ax = plt.subplots(figsize=[12,5])
-
     plt.bar(x=df_total_business['state'], height=df_total_business['is_open'])
     plt.bar(x=df_total_business['state'], height=(df_total_business['total'] - df_total_business['is_open']))
-
     ax.set(xlabel='Estados',
         ylabel='Quantidade',
         title='Quantidade de negócios abertos x fechados por Estado'
         )
-        
     plt.legend(['Open','Closed'])
     st.pyplot(fig)
 
-elif '5' in option:
 
+elif '5' in option:
     # Criando um Dataframe contendo as categorias e a quantidade de negócios presentes em cada uma delas
     cat_dict = {}
     for feature in business:
         if 'category' in feature:
             new_feature = feature.replace('category_','')
             cat_dict[new_feature] = business[feature].value_counts()[1]
-
     df = pd.DataFrame.from_dict(cat_dict, orient='index').reset_index()
     df = df.rename({'index':'categories', 0:'qty'}, axis=1)
     df = df.sort_values(by='qty', ascending=False).reset_index(drop=True).head(10)
@@ -123,20 +113,18 @@ elif '5' in option:
                     "qty": "Quantidade"
                     }
         )
-
     fig.update_layout(title_text = 'Ranking das categorias com mais negócios cadastrados (TOP 10)',
                     title_font_size = 22,
                     )
     st.plotly_chart(fig)
 
-elif '6' in option:
 
+elif '6' in option:
     state_option = st.selectbox("Selecione o Estado desejado", business['state'].unique())
 
     # Criando um Dataframe contendo as categorias e a quantidade de negócios presentes em cada uma delas para um Estado ESPECÍFICO
     cat_dict2 = {}
     business2 = business[business['state'] == state_option]
-
     for feature in business2:
         if 'category' in feature:
             new_feature = feature.replace('category_','')
@@ -146,16 +134,12 @@ elif '6' in option:
     df2 = df2.rename({'index':'categories', 0:'qty'}, axis=1)
     df2 = df2.sort_values(by='qty', ascending=False).reset_index(drop=True).head(10)
 
-
-    # Plotando o gráfico das categorias com mais negócios cadastrados no Estado selecionado
-
     fig = px.bar(df2, y='qty', x='categories', text_auto='.2s',
                 labels={
                         "categories": "Categorias",
                         "qty": "Quantidade"
                         }
                 )
-
     fig.update_layout(title_text = f"Categorias com mais negócios cadastrados no estado {state_option} (TOP 10)",
                     title_font_size = 22,
                     )
