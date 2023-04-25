@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
+import requests
+from io import BytesIO
 
 @st.cache(allow_output_mutation=True)
 def load_file(url):
