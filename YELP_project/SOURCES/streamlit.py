@@ -4,12 +4,15 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 
-# Setup do download do arquivo PKL
-st.sidebar.download_button(
-    label="Download business_EDITED.pkl",
-    data='https://github.com/thiagopastre/PORTFOLIO/raw/main/YELP_project/INPUT/business_EDITED.pkl',
-    file_name='business_EDITED.pkl',
-)
+@st.cache(allow_output_mutation=True)
+def load_file(url):
+    modelLink = url
+    model = requests.get(modelLink).content
+    return model
+modelFile = load_file("https://github.com/thiagopastre/PORTFOLIO/raw/main/YELP_project/INPUT/business_EDITED.pkl")
+model = BytesIO(modelFile)
+
+st.write(model)
 
 # Setup do upload do arquivo PKL
 file=st.sidebar.file_uploader(
