@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 
-# Função para realizar o upload automático do arquivo 'business_EDITED.pkl'
+# Function to automatically upload the file 'business_EDITED.pkl
 @st.cache_data
 def load_data(url):
     df = pd.read_pickle(url)
@@ -14,17 +14,17 @@ business = load_data("https://github.com/thiagopastre/PORTFOLIO/raw/main/YELP_pr
 
 st.title('EDA Yelp Project')
 
-graphs = ['1. Distribuição do target (stars)',
-        '2. Quantidade de negócios cadastrados por Estado (todos os Estados)',
-        '3. Quantidade de negócios cadastrados por Estado (apenas EUA)',
-        '4. Quantidade de negócios abertos x fechados por Estado',
-        '5. Ranking das categorias com mais negócios cadastrados',
-        '6. Categorias com mais negócios cadastrados no Estado selecionado'
+graphs = ['1. Target distribution (stars)',
+        '2. Number of registered businesses per state (all states)',
+        '3. Number of registered businesses per state (US only)',
+        '4. Number of open x closed businesses per state',
+        '5. Ranking of categories with most registered businesses',
+        '6. Categories with most registered businesses in the selected state'
         ]
 
-option = st.selectbox("Qual gráfico gostaria de analisar?", graphs)
+option = st.selectbox("Which chart would you like to analyze?", graphs)
 
-# Criando um Dataframe contendo a quantidade TOTAL de negócios (abertos e fechados) agrupados por Estado
+# Creating a Dataframe containing the TOTAL amount of business (open and closed) grouped by State
 df_total_business = business[['state','is_open']].groupby('state').sum()
 df_total_business['total'] = business[['state','is_open']].groupby('state').count()
 df_total_business = df_total_business.sort_values(by='total', ascending=False).reset_index()
@@ -43,14 +43,14 @@ if '1' in option:
                 y=stars,
                 palette='PuBu'
             )
-    fig.suptitle('Distribuição da feature "stars"')
+    fig.suptitle('Distribution of the feature "stars"')
     ax[1].set_xlabel('Stars')
-    ax[1].set_ylabel('Quantidade de avaliações')
+    ax[1].set_ylabel('Number of reviews')
     st.pyplot(fig)
 
-    st.write("Observa-se que 50% dos negócios cadastrados estão qualificados com no máximo 3.5 estrelas, \
-                sendo que a grande maioria deles está abaixo de 3 estrelas.")
-    st.write("Temos penas 25% dos negócios atingindo a pontuação máxima.")
+    st.write("We see that 50% of the registered businesses are rated with a maximum of 3.5 stars, \
+              with the vast majority of them below 3 stars.")
+    st.write("We have only 25% of the businesses achieving the maximum score.")
 
 
 elif '2' in option:
@@ -62,9 +62,9 @@ elif '2' in option:
                     )
     for i in ax.containers:
         ax.bar_label(i,)
-    ax.set(xlabel='Estados',
-        ylabel='Quantidade',
-        title='Quantidade de negócios cadastrados por Estado'
+    ax.set(xlabel='States',
+        ylabel='Quantity',
+        title='Number of registered businesses per state'
         )
     st.pyplot(fig)
 
@@ -77,7 +77,7 @@ elif '3' in option:
                     color='total',
                     color_continuous_scale="turbo"
                     )
-    fig.update_layout(title_text = 'Quantidade de negócios cadastrados por Estado (USA)',
+    fig.update_layout(title_text = 'Number of registered businesses per state (US)',
                         title_font_size = 22,
                         )
 
@@ -88,16 +88,16 @@ elif '4' in option:
     fig, ax = plt.subplots(figsize=[12,5])
     plt.bar(x=df_total_business['state'], height=df_total_business['is_open'])
     plt.bar(x=df_total_business['state'], height=(df_total_business['total'] - df_total_business['is_open']))
-    ax.set(xlabel='Estados',
-        ylabel='Quantidade',
-        title='Quantidade de negócios abertos x fechados por Estado'
+    ax.set(xlabel='States',
+        ylabel='Quantity',
+        title='Number of open x closed businesses per State'
         )
     plt.legend(['Open','Closed'])
     st.pyplot(fig)
 
 
 elif '5' in option:
-    # Criando um Dataframe contendo as categorias e a quantidade de negócios presentes em cada uma delas
+    # Creating a Dataframe containing the categories and the number of businesses present in each category (All States)
     cat_dict = {}
     for feature in business:
         if 'category' in feature:
@@ -109,20 +109,20 @@ elif '5' in option:
 
     fig = px.bar(df, y='qty', x='categories', text_auto='.2s',
             labels={
-                    "categories": "Categorias",
-                    "qty": "Quantidade"
+                    "categories": "Categories",
+                    "qty": "Quantity"
                     }
         )
-    fig.update_layout(title_text = 'Ranking das categorias com mais negócios cadastrados (TOP 10)',
+    fig.update_layout(title_text = 'Ranking of the categories with the most registered businesses (TOP 10)',
                     title_font_size = 22,
                     )
     st.plotly_chart(fig)
 
 
 elif '6' in option:
-    state_option = st.selectbox("Selecione o Estado desejado", business['state'].unique())
+    state_option = st.selectbox("Select the State you want", business['state'].unique())
 
-    # Criando um Dataframe contendo as categorias e a quantidade de negócios presentes em cada uma delas para um Estado ESPECÍFICO
+    # Creating a Dataframe containing the categories and the amount of business present in each of them for a SPECIFIC STATE
     cat_dict2 = {}
     business2 = business[business['state'] == state_option]
     for feature in business2:
@@ -136,11 +136,11 @@ elif '6' in option:
 
     fig = px.bar(df2, y='qty', x='categories', text_auto='.2s',
                 labels={
-                        "categories": "Categorias",
-                        "qty": "Quantidade"
+                        "categories": "Categories",
+                        "qty": "Quantity"
                         }
                 )
-    fig.update_layout(title_text = f"Categorias com mais negócios cadastrados no estado {state_option} (TOP 10)",
+    fig.update_layout(title_text = f"Categories with most registered businesses in the state {state_option} (TOP 10)",
                     title_font_size = 22,
                     )
     st.plotly_chart(fig)
