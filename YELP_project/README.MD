@@ -1,12 +1,12 @@
-### Visão geral do projeto
+### Project overview
 
-Esse projeto tem como objetivo aplicar os conhecimentos adquiridos durante os 14 meses de duração do treinamento Data Science Degree ministrado pela Let's Code (atualmente Ada Tech).
+This project aims to apply the knowledge acquired during the 14 months of Data Science Degree training given by Let's Code (currently Ada Tech).
 
-Ele será dividido em algumas etapas:
+It will be divided into a few steps:
 
 * Data Processing + Feature Engineering
-* Análise exploratória dos dados (EDA)
-* Aplicação de modelos de Machine Learning
-* Otimização de modelos
+* Exploratory Data Analysis (EDA)
+* Application of Machine Learning models
+* Model optimization
 
-Ao final desse projeto teremos um modelo capaz de predizer, com base nas características fornecidas, qual será a avaliação (ou nota) que uma empresa ou negócio poderia receber ao se cadastrar para utilizar o serviço.
+At the end of this project we will have a model capable of predicting, based on the characteristics provided, what will be the evaluation (or grade) that a company or business could receive when registering to use the service.
